@@ -1,0 +1,75 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+        ".",
+        "flame_game_testing"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "Mossy - BackgroundDecoration.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.0625,
+            "scaleInEditor": 0.25
+        },
+        "Mossy - TileSet.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.0625,
+            "scaleInEditor": 0.25
+        },
+        "flame_game_testing/assets/tiles/Mossy - BackgroundDecoration.tsx": {
+            "scaleInDock": 0.0625,
+            "scaleInEditor": 1
+        },
+        "flame_game_testing/assets/tiles/Mossy - TileSet.tsx": {
+            "scaleInDock": 0.0625,
+            "scaleInEditor": 1
+        },
+        "flame_game_testing/assets/tiles/testlevel.tmx": {
+            "scale": 0.05640625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 7685.318559556787,
+                "y": 5283.102493074793
+            }
+        },
+        "test-level.tmx": {
+            "scale": 0.0625,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 6632,
+                "y": 4224
+            }
+        },
+        "test.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.125,
+            "scaleInEditor": 0.25
+        }
+    },
+    "last.imagePath": "C:/Users/Ibad_/Documents/GameDev/testgame/flame_game_testing/assets/images/Mossy Assets/Mossy Tileset",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 512,
+    "map.tileWidth": 512,
+    "openFiles": [
+    ],
+    "project": "level-test.tiled-project",
+    "recentFiles": [
+        "flame_game_testing/assets/tiles/Mossy - TileSet.tsx",
+        "flame_game_testing/assets/tiles/testlevel.tmx",
+        "flame_game_testing/assets/tiles/Mossy - BackgroundDecoration.tsx",
+        "Mossy - TileSet.tsx",
+        "Mossy - BackgroundDecoration.tsx",
+        "test-level.tmx",
+        "test.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 512,
+        "width": 512
+    },
+    "tileset.type": 0
+}
