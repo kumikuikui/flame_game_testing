@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="17">
+ <layer id="1" name="Tile Layer 1" width="30" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="spawn">
+  <object id="1" name="Collision" type="Collision" x="3.40389" y="283.721" width="367.38" height="35.2991"/>
+  <object id="2" name="Collision" type="Collision" x="0.424331" y="602.969" width="530.38" height="35.2991"/>
+  <object id="3" name="Collision" type="Collision" x="1.27566" y="1.07967" width="31.5018" height="638.891"/>
+  <object id="4" name="Collision" type="Collision" x="1.06522" y="30.7404" width="31.5018" height="638.891" rotation="-90"/>
+  <object id="6" name="Collision" type="Collision" x="2.31" y="220.85" width="57.88" height="98.7991"/>
+  <object id="7" name="Collision" type="Collision" x="103.56" y="170.6" width="57.88" height="8.7991"/>
+  <object id="8" name="Collision" type="Collision" x="41.56" y="241.85" width="57.88" height="43.2991"/>
+  <object id="9" name="Collision" type="Collision" x="201.06" y="133.1" width="57.88" height="8.7991"/>
+  <object id="10" name="Collision" type="Collision" x="601.06" y="242.6" width="242.38" height="38.7991" rotation="-90"/>
+  <object id="11" name="Collision" type="Collision" x="435.06" y="285.85" width="57.88" height="169.799"/>
+  <object id="12" name="Collision" type="Collision" x="57.56" y="434.1" width="34.88" height="387.299" rotation="-90"/>
+  <object id="13" name="Collision" type="Collision" x="435.56" y="322.851" width="34.88" height="387.299" rotation="-90"/>
+  <object id="14" name="Collision" type="Collision" x="384.56" y="212.351" width="34.88" height="206.299" rotation="-180"/>
+  <object id="15" name="Spawnpoints" type="Spawnpoints" x="171.333" y="242.667">
+   <point/>
+  </object>
+  <object id="16" name="enemy" type="enemy" x="560.667" y="69.3333">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

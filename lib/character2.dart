@@ -13,15 +13,20 @@ import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-enum CharacterState {
-  idle,
-  walking,
-}
+enum PlayerState { idle, run, jump, falling, somersault }
 
-class Character extends RiveComponent
+class Character2 extends SpriteAnimationGroupComponent
     with CollisionCallbacks, KeyboardHandler, HasGameRef<TestGame> {
-  Character({required artboard, position})
-      : super(artboard: artboard, position: position);
+  Character2({position}) : super(position: position);
+
+  final double stepTime = 0.05;
+  late final SpriteAnimation idleAnimation;
+  late final SpriteAnimation runningAnimation;
+  late final SpriteAnimation jumpingAnimation;
+  late final SpriteAnimation fallingAnimation;
+  late final SpriteAnimation hitAnimation;
+  late final SpriteAnimation appearingAnimation;
+  late final SpriteAnimation disappearingAnimation;
 
   double speed = 0;
   double maxSpeed = 150;
@@ -40,17 +45,12 @@ class Character extends RiveComponent
   late double deceleration;
   late double turnSpeed;
 
-  late SMIInput<bool>? isWalking;
-  late SMIInput<bool>? isJumping;
-  late SMIInput<bool>? isFalling;
-
   Vector2 velocity = Vector2.zero();
-  
+
   double horizontalMovement = 0;
   double moveSpeed = 100;
-  
-  double _gravity = 4;
 
+  double _gravity = 4;
 
   final double _jumpForce = 270;
   final double _terminalVelocity = 300;
@@ -67,14 +67,7 @@ class Character extends RiveComponent
 
   @override
   FutureOr<void> onLoad() {
-    final controller = StateMachineController.fromArtboard(
-      artboard,
-      "State Machine 2",
-    );
-    artboard.addController(controller!);
-    isWalking = controller.findInput<bool>('isWalking');
-    isJumping = controller.findInput<bool>('isJumping');
-    isFalling = controller.findInput<bool>('isFalling');
+    _loadAllAnimations();
 
     add(RectangleHitbox(collisionType: CollisionType.active, isSolid: true));
 
@@ -278,10 +271,37 @@ class Character extends RiveComponent
     }
   }
 
+  void _loadAllAnimations() {
+    idleAnimation = _spriteAnimation(4, 0, 0);
+    runningAnimation = _spriteAnimation(6, 1, 1);
+    jumpingAnimation = _spriteAnimation(3, 1, 2);
+    fallingAnimation = _spriteAnimation(2, 1, 3);
+
+    // List of all animations
+    animations = {
+      PlayerState.idle: idleAnimation,
+      PlayerState.run: runningAnimation,
+      PlayerState.jump: jumpingAnimation,
+      PlayerState.falling: fallingAnimation,
+    };
+
+    // Set current animation
+    current = PlayerState.idle;
+  }
+
+  SpriteAnimation _spriteAnimation(int amount, double start, double end) {
+    return SpriteAnimation.fromFrameData(
+      game.images.fromCache('character/adventurer-v1.5-Sheet.png'),
+      SpriteAnimationData.sequenced(
+          amount: amount,
+          stepTime: .15,
+          textureSize: Vector2(50, 37),
+          texturePosition: Vector2(50 * start, 37 * end)),
+    );
+  }
+
   void _updatePlayerState() {
-    if (isWalking == null || isJumping == null || isFalling == null) {
-      return;
-    }
+    PlayerState playerState = PlayerState.idle;
 
     if (velocity.x < 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
@@ -290,33 +310,15 @@ class Character extends RiveComponent
     }
 
     // Check if moving, set running
-    if (velocity.x > 0 || velocity.x < 0) {
-      isWalking!.value = true;
-      isJumping!.value = false;
-      isFalling!.value = false;
-    } else {
-      isWalking!.value = false;
-    }
+    if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.run;
 
     // check if Falling set to falling
-    if (velocity.y > 0 && !isOnGround) {
-      isWalking!.value = false;
-      isJumping!.value = false;
-      isFalling!.value = true;
-    } else {
-      isFalling!.value = false;
-    }
+    if (velocity.y > 0) playerState = PlayerState.falling;
 
     // Checks if jumping, set to jumping
-    if (velocity.y < 0 && !isOnGround) {
-      isWalking!.value = false;
-      isJumping!.value = true;
-      isFalling!.value = false;
-    } else {
-      isJumping!.value = false;
-    }
+    if (velocity.y < 0) playerState = PlayerState.jump;
 
-    // print('isWalking : ${isWalking!.value} ---- isJumping : ${isJumping!.value} ---  isFalling : ${isFalling!.value} ');
+    current = playerState;
   }
 
   void _applyGravity(double dt) {

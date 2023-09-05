@@ -7,6 +7,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_game_testing/block.dart';
+import 'package:flame_game_testing/character2.dart';
 import 'package:flame_game_testing/enemy.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -25,18 +26,19 @@ class TestGame extends FlameGame
   final world = World();
   late final CameraComponent cameraComponent;
   late TiledComponent tileMap;
-  late Character character;
+  // late Character character;
+  late Character2 character;
 
   @override
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
     tileMap = await TiledComponent.load(
-      'testlevel.tmx',
-      Vector2.all(128),
+      'testlevel2.tmx',
+      Vector2.all(32),
     );
 
-    final skillsArtboard = await loadArtboard(
-        RiveFile.asset('assets/images/character/walkman.riv'));
+    // final skillsArtboard = await loadArtboard(
+    //     RiveFile.asset('assets/images/character/walkman.riv'));
 
     // final controller = StateMachineController.fromArtboard(
     //   skillsArtboard,
@@ -45,7 +47,9 @@ class TestGame extends FlameGame
 
     // skillsArtboard.addController(controller!);
 
-    character = Character(artboard: skillsArtboard);
+    // character = Character(artboard: skillsArtboard);
+
+    character = Character2();
 
     cameraComponent = CameraComponent(world: world);
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
@@ -237,14 +241,14 @@ class TestGame extends FlameGame
       for (final spawnPoint in spawnPointsLayer.objects) {
         switch (spawnPoint.class_) {
           case 'Spawnpoints':
-            character.position = Vector2(spawnPoint.x / 4, spawnPoint.y / 4);
+            character.position = Vector2(spawnPoint.x, spawnPoint.y);
             character.scale.x = 1;
             add(character);
             break;
           case 'Collision':
             final block = CollisionBlock(
-              position: Vector2(spawnPoint.x / 4, spawnPoint.y / 4),
-              size: Vector2(spawnPoint.width / 4, spawnPoint.height / 4),
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             block.add(RectangleHitbox(collisionType: CollisionType.passive));
             collisionBlocks.add(block);
