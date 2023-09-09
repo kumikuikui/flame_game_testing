@@ -28,7 +28,7 @@ class Character2 extends SpriteAnimationGroupComponent
   late final SpriteAnimation appearingAnimation;
   late final SpriteAnimation disappearingAnimation;
 
-  double speed = 0;
+  double speed = 50;
   double maxSpeed = 150;
   double maxAcceleration = 52;
   double maxDecceleration = 52;
@@ -41,7 +41,7 @@ class Character2 extends SpriteAnimationGroupComponent
   late Vector2 desiredVelocity;
   late Vector2 velocityTest;
   late double maxSpeedChange;
-  double acceleration = .8;
+  double acceleration = 100;
   late double deceleration;
   late double turnSpeed;
 
@@ -50,7 +50,7 @@ class Character2 extends SpriteAnimationGroupComponent
   double horizontalMovement = 0;
   double moveSpeed = 100;
 
-  double _gravity = 4;
+  double _gravity = 5;
 
   final double _jumpForce = 270;
   final double _terminalVelocity = 300;
@@ -63,11 +63,14 @@ class Character2 extends SpriteAnimationGroupComponent
   double dashingTime = 0.24;
   int dashingCooldown = 1;
 
+  double fixedDeltaTime = 1 / 60;
+
   List<CollisionBlock> collisionBlocks = [];
 
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
+    anchor = Anchor.center;
 
     add(RectangleHitbox(collisionType: CollisionType.active, isSolid: true));
 
@@ -76,15 +79,15 @@ class Character2 extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    _updatePlayerMovement(dt);
-    // move(dt);
+    // _updatePlayerMovement(fixedDeltaTime);
+    move(fixedDeltaTime);
     _updatePlayerState();
 
     _checkHorizontalCollisions();
 
-    _applyGravity(dt);
+    _applyGravity(fixedDeltaTime);
     _checkVerticalCollisions();
-    _Dash(dt);
+    _Dash(fixedDeltaTime);
 
     if (horizontalMovement == 0) {
       stop();
@@ -112,8 +115,8 @@ class Character2 extends SpriteAnimationGroupComponent
   bool checkCollision(player, block) {
     final playerX = player.position.x;
     final playerY = player.position.y;
-    final playerWidth = width;
-    final playerHeight = height;
+    final playerWidth = width/2;
+    final playerHeight = height/2;
 
     final blockX = block.x;
     final blockY = block.y;
@@ -137,12 +140,12 @@ class Character2 extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocity.x > 0) {
             velocity.x = 0;
-            position.x = block.x - width;
+            position.x = block.x - width/2;
             break;
           }
           if (velocity.x < 0) {
             velocity.x = 0;
-            position.x = block.x + block.width + width;
+            position.x = block.x + block.width + width/2;
             break;
           }
         }
@@ -156,7 +159,7 @@ class Character2 extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocity.y > 0) {
             velocity.y = 0;
-            position.y = block.y - height;
+            position.y = block.y - height/2;
             isOnGround = true;
             break;
           }
@@ -165,7 +168,7 @@ class Character2 extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocity.y > 0) {
             velocity.y = 0;
-            position.y = block.y - height;
+            position.y = block.y - height/2;
             isOnGround = true;
             break;
           }
@@ -274,7 +277,7 @@ class Character2 extends SpriteAnimationGroupComponent
   void _loadAllAnimations() {
     idleAnimation = _spriteAnimation(4, 0, 0);
     runningAnimation = _spriteAnimation(6, 1, 1);
-    jumpingAnimation = _spriteAnimation(3, 1, 2);
+    jumpingAnimation = _spriteAnimation(5, 1, 2);
     fallingAnimation = _spriteAnimation(2, 1, 3);
 
     // List of all animations
@@ -294,7 +297,7 @@ class Character2 extends SpriteAnimationGroupComponent
       game.images.fromCache('character/adventurer-v1.5-Sheet.png'),
       SpriteAnimationData.sequenced(
           amount: amount,
-          stepTime: .15,
+          stepTime: .05,
           textureSize: Vector2(50, 37),
           texturePosition: Vector2(50 * start, 37 * end)),
     );
