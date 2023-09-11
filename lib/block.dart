@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 
-class CollisionBlock extends PositionComponent {
+class CollisionBlock extends RectangleComponent {
   bool isPlatform;
   CollisionBlock({
     position,
@@ -11,5 +12,7 @@ class CollisionBlock extends PositionComponent {
   }) : super(
           position: position,
           size: size,
+          paint: Paint()..color = Color.fromARGB(114, 43, 44, 45)
         );
+
 }

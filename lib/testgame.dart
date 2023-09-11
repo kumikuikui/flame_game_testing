@@ -54,7 +54,7 @@ class TestGame extends FlameGame
     cameraComponent = CameraComponent(world: world);
     cameraComponent.viewfinder.anchor = Anchor.center;
 
-    debugMode = true;
+    // debugMode = true;
 
     addAll([cameraComponent, world]);
 
@@ -65,55 +65,6 @@ class TestGame extends FlameGame
     return super.onLoad();
   }
 
-  final TopDirection = Vector2(0, -1);
-  final BottomDirection = Vector2(0, 1);
-  final LeftDirection = Vector2(-1, 0);
-  final RightDirection = Vector2(1, 0);
-
-  List<RaycastResult<ShapeHitbox>>? results;
-  RaycastResult<ShapeHitbox>? topRay;
-  RaycastResult<ShapeHitbox>? bottomRay;
-  RaycastResult<ShapeHitbox>? leftRay;
-  RaycastResult<ShapeHitbox>? rightRay;
-
-  List<ShapeHitbox>? test;
-
-  @override
-  void update(double dt) {
-    // TODO: implement update
-    super.update(dt);
-
-    final top = Ray2(
-      origin: character.positionOfAnchor(Anchor.topCenter),
-      direction: TopDirection,
-    );
-    final bottom = Ray2(
-      origin: character.positionOfAnchor(Anchor.bottomCenter),
-      direction: BottomDirection,
-    );
-    final left = Ray2(
-      origin: character.positionOfAnchor(Anchor.centerLeft),
-      direction: LeftDirection,
-    );
-    final right = Ray2(
-      origin: character.positionOfAnchor(Anchor.centerRight),
-      direction: RightDirection,
-    );
-
-    if (character.scale.x < 0) {
-      left.setWith(
-          origin: character.positionOfAnchor(Anchor.centerLeft),
-          direction: RightDirection);
-      right.setWith(
-          origin: character.positionOfAnchor(Anchor.centerRight),
-          direction: LeftDirection);
-    }
-
-    topRay = collisionDetection.raycast(top);
-    bottomRay = collisionDetection.raycast(bottom);
-    leftRay = collisionDetection.raycast(left);
-    rightRay = collisionDetection.raycast(right);
-  }
 
   @override
   void onMouseMove(PointerHoverInfo info) {

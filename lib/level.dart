@@ -6,6 +6,7 @@ import 'package:flame/geometry.dart';
 import 'package:flame_game_testing/block.dart';
 import 'package:flame_game_testing/character2.dart';
 import 'package:flame_game_testing/testgame.dart';
+import 'package:flame_game_testing/water.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 class Level extends World with HasGameRef<TestGame> {
@@ -94,13 +95,13 @@ class Level extends World with HasGameRef<TestGame> {
       //   pointerColor,
       // );
 
-      canvas.drawPoints(
-          PointMode.lines,
-          [
-            character.positionOfAnchor(Anchor.center).toOffset(),
-            pointerPosition
-          ],
-          paint);
+      // canvas.drawPoints(
+      //     PointMode.lines,
+      //     [
+      //       character.positionOfAnchor(Anchor.center).toOffset(),
+      //       pointerPosition
+      //     ],
+      //     paint);
     }
 
     if (topRay != null && topRay!.isActive) {
@@ -214,6 +215,11 @@ class Level extends World with HasGameRef<TestGame> {
             //     radius: 5.toDouble(),
             //     paint: Paint()..color = Color.fromARGB(255, 255, 174, 0));
             // add(enemy);
+            break;
+          case 'Water':
+            add(Water(
+                position: Vector2(spawnPoint.x, spawnPoint.y),
+                size: Vector2(spawnPoint.width, spawnPoint.height)));
             break;
           default:
         }

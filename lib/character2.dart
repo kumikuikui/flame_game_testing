@@ -50,12 +50,14 @@ class Character2 extends SpriteAnimationGroupComponent
   double horizontalMovement = 0;
   double moveSpeed = 100;
 
-  double _gravity = 5;
-
-  final double _jumpForce = 270;
+  final double _gravity = 6;
+  final double _jumpForce = 220;
   final double _terminalVelocity = 300;
+
   bool isOnGround = false;
   bool hasJumped = false;
+  int maxAirJumps = 1;
+  bool canJumpAgain = true;
 
   bool canDash = true;
   bool isDashing = false;
@@ -72,7 +74,7 @@ class Character2 extends SpriteAnimationGroupComponent
     _loadAllAnimations();
     anchor = Anchor.center;
 
-    add(RectangleHitbox(collisionType: CollisionType.active, isSolid: true));
+    // add(RectangleHitbox(collisionType: CollisionType.active, isSolid: true));
 
     return super.onLoad();
   }
@@ -103,20 +105,20 @@ class Character2 extends SpriteAnimationGroupComponent
     super.render(canvas);
   }
 
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is CollisionBlock) {
-      if (intersectionPoints.length == 2) {}
-    }
+  // @override
+  // void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+  //   if (other is CollisionBlock) {
+  //     if (intersectionPoints.length == 2) {}
+  //   }
 
-    super.onCollision(intersectionPoints, other);
-  }
+  //   super.onCollision(intersectionPoints, other);
+  // }
 
   bool checkCollision(player, block) {
     final playerX = player.position.x;
     final playerY = player.position.y;
-    final playerWidth = width/2;
-    final playerHeight = height/2;
+    final playerWidth = width / 2;
+    final playerHeight = height / 2;
 
     final blockX = block.x;
     final blockY = block.y;
@@ -140,12 +142,12 @@ class Character2 extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocity.x > 0) {
             velocity.x = 0;
-            position.x = block.x - width/2;
+            position.x = block.x - width / 2;
             break;
           }
           if (velocity.x < 0) {
             velocity.x = 0;
-            position.x = block.x + block.width + width/2;
+            position.x = block.x + block.width + width / 2;
             break;
           }
         }
@@ -159,7 +161,7 @@ class Character2 extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocity.y > 0) {
             velocity.y = 0;
-            position.y = block.y - height/2;
+            position.y = block.y - height / 2;
             isOnGround = true;
             break;
           }
@@ -168,7 +170,7 @@ class Character2 extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocity.y > 0) {
             velocity.y = 0;
-            position.y = block.y - height/2;
+            position.y = block.y - height / 2;
             isOnGround = true;
             break;
           }
@@ -203,25 +205,12 @@ class Character2 extends SpriteAnimationGroupComponent
     return super.onKeyEvent(event, keysPressed);
   }
 
-  void _updatePlayerMovement(double dt) {
-    if (isDashing) {
-      return;
-    }
-
-    if (hasJumped && isOnGround) _playerJump(dt);
-
-    if (velocity.y > _gravity) isOnGround = false; // optional
-
-    velocity.x = horizontalMovement * moveSpeed;
-    position.x += velocity.x * dt;
-  }
-
   void move(double dt) {
     if (isDashing) {
       return;
     }
 
-    if (hasJumped && isOnGround) _playerJump(dt);
+    if (hasJumped) _playerJump(dt);
 
     if (velocity.y > _gravity) isOnGround = false; // optional
 
@@ -240,12 +229,12 @@ class Character2 extends SpriteAnimationGroupComponent
     if (speed > 0) {
       speed -= 1 * 2;
       if (speed < 0) {
-        speed = 0;
+        speed = 50;
       }
     } else if (speed < 0) {
       speed += 1 * 2;
       if (speed > 0) {
-        speed = 0;
+        speed = 50;
       }
     }
   }
@@ -297,7 +286,7 @@ class Character2 extends SpriteAnimationGroupComponent
       game.images.fromCache('character/adventurer-v1.5-Sheet.png'),
       SpriteAnimationData.sequenced(
           amount: amount,
-          stepTime: .05,
+          stepTime: stepTime,
           textureSize: Vector2(50, 37),
           texturePosition: Vector2(50 * start, 37 * end)),
     );
@@ -335,9 +324,14 @@ class Character2 extends SpriteAnimationGroupComponent
       return;
     }
 
-    velocity.y = -_jumpForce;
-    position.y += velocity.y * dt;
+    if (isOnGround || canJumpAgain) {
+      canJumpAgain = (maxAirJumps == 1 && canJumpAgain == false);
+      velocity.y = -_jumpForce;
+      position.y += velocity.y * dt;
+    }
+
     isOnGround = false;
     hasJumped = false;
+    // maxAirJumps -= 1;
   }
 }
